@@ -70,3 +70,13 @@ code {
   align-items: center;
   cursor: pointer;
 }
+
+.Button {
+  @include border($light_grey, #FFF);
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+}

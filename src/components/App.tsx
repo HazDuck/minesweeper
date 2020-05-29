@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { NumberDisplay } from './NumberDisplay'
 import { generateCells } from '../utils'
+import { Button } from './Button'
 
 export const App: React.FC = () => {
   //dont forget you can initialize useState with a called funciton 😁
   const [cells, setCells ] = useState(generateCells())
   console.log(cells)
+
   return (
     <div className="App">
       <div className="Header">
@@ -18,7 +20,13 @@ export const App: React.FC = () => {
       </div>
       <NumberDisplay value={23} />
       </div>
-      <div className="Body">Body</div>
+      <div className="Body">
+        {cells.map((row, rowIndex) => 
+          row.map((cell, colIndex) => 
+            <Button/>
+          )
+        )}
+      </div>
     </div>
   )
 }
