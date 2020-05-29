@@ -1,3 +1,21 @@
+@mixin border_unpressed {
+  border-width: 4px;
+  border-style: solid;
+  border-right-color: #999;
+  border-bottom-color: #999;
+  border-left-color: #FFF;
+  border-top-color: #FFF;
+}
+
+@mixin border_pressed {
+  border-width: 4px;
+  border-style: solid;
+  border-right-color: #FFF;
+  border-bottom-color: #FFF;
+  border-left-color: #7b7b7b;
+  border-top-color: #7b7b7b;
+}
+
 body {
   box-sizing: border-box;
   display: flex;
@@ -18,23 +36,14 @@ code {
 }
 
 .App {
+  @include border_unpressed;
   background: #C2C2C2;
   padding: 16px;
-  border-width: 4px;
-  border-style: solid;
-  border-right-color: #999;
-  border-bottom-color: #999;
-  border-left-color: #FFF;
-  border-top-color: #FFF;
 }
 
 .Header {
+  @include border_pressed;
   padding: 10px 12px;
-  border-style: solid;
-  border-right-color: #FFF;
-  border-bottom-color: #FFF;
-  border-left-color: #7b7b7b;
-  border-top-color: #7b7b7b;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,30 +59,20 @@ code {
 }
 
 .Body {
+  @include border_pressed;
   margin-top: 16px;
-  border-width: 4px;
-  border-style: solid;
-  border-right-color: #FFF;
-  border-bottom-color: #FFF;
-  border-left-color: #7b7b7b;
-  border-top-color: #7b7b7b;
   display: grid;
   grid-template-rows: repeat(9, 1fr);
   grid-template-columns: repeat(9, 1fr)
 }
 
 .Face {
+  @include border_unpressed;
   width: 48px;
   height: 48px;
   font-size: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-width: 4px;
-  border-style: solid;
-  border-right-color: #7b7b7b;
-  border-bottom-color: #7b7b7b;
-  border-left-color: #FFF;
-  border-top-color: #FFF;
   cursor: pointer;
 }
