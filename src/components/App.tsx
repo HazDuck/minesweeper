@@ -23,7 +23,7 @@ export const App: React.FC = () => {
       <div className="Body">
         {cells.map((row, rowIndex) => 
           row.map((cell, colIndex) => 
-            <Button/>
+            <Button key={`${row}`}/>
           )
         )}
       </div>
