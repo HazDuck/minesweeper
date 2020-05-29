@@ -1,7 +1,11 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { NumberDisplay } from './NumberDisplay'
+import { generateCells } from '../utils'
 
 export const App: React.FC = () => {
+  //dont forget you can initialize useState with a called funciton 😁
+  const [cells, setCells ] = useState(generateCells())
+  console.log(cells)
   return (
     <div className="App">
       <div className="Header">

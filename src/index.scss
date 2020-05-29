@@ -1,20 +1,14 @@
-@mixin border_unpressed {
+@mixin border ($color1, $color2) {
   border-width: 4px;
   border-style: solid;
-  border-right-color: #999;
-  border-bottom-color: #999;
-  border-left-color: #FFF;
-  border-top-color: #FFF;
+  border-right-color: $color1;
+  border-bottom-color: $color1;
+  border-left-color: $color2;
+  border-top-color: $color2;
 }
 
-@mixin border_pressed {
-  border-width: 4px;
-  border-style: solid;
-  border-right-color: #FFF;
-  border-bottom-color: #FFF;
-  border-left-color: #7b7b7b;
-  border-top-color: #7b7b7b;
-}
+$light_grey: #999;
+$dark_grey: #7b7b7b;
 
 body {
   box-sizing: border-box;
@@ -36,13 +30,13 @@ code {
 }
 
 .App {
-  @include border_unpressed;
+  @include border($light_grey, #FFF);
   background: #C2C2C2;
   padding: 16px;
 }
 
 .Header {
-  @include border_pressed;
+  @include border(#FFF, $dark_grey);
   padding: 10px 12px;
   display: flex;
   justify-content: space-between;
@@ -59,7 +53,7 @@ code {
 }
 
 .Body {
-  @include border_pressed;
+  @include border(#FFF, $dark_grey);
   margin-top: 16px;
   display: grid;
   grid-template-rows: repeat(9, 1fr);
@@ -67,7 +61,7 @@ code {
 }
 
 .Face {
-  @include border_unpressed;
+  @include border($light_grey, #FFF);
   width: 48px;
   height: 48px;
   font-size: 35px;
