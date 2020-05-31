@@ -18,5 +18,6 @@ export enum CellState {
 }
 
 export type Cell =  {
-  value: CellValue, state: CellState 
+  value: CellValue, 
+  state: CellState 
 }

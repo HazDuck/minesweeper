@@ -1,4 +1,14 @@
 import React from 'react';
+import { Cell, CellState, CellValue } from '../types'
 
-export const Button: React.FC = () => <div className="Button"></div>
+interface ButtonProps {
+  row: number, 
+  col: number,
+  state: CellState,
+  value: CellValue
+}
+
+export const Button: React.FC <ButtonProps> = ({ row, col, state, value }) => (
+  <div className="Button"></div>
+)
 
