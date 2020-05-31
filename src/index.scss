@@ -69,6 +69,10 @@ code {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &:active {
+    @include border(#FFF, $dark_grey);
+  }
 }
 
 .Button {
@@ -79,4 +83,8 @@ code {
   height: 30px;
   justify-content: center;
   width: 30px;
+
+  &:active {
+    @include border(#FFF, $dark_grey);
+  }
 }

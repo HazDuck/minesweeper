@@ -1,10 +1,4 @@
 import React from 'react';
 
-export const Button: React.FC = () => {
-return (
-  <div
-    className="Button"
-  >
-  </div>
-)
-}
+export const Button: React.FC = () => <div className="Button"></div>
+

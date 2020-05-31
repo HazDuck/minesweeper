@@ -6,7 +6,6 @@ import { Button } from './Button'
 export const App: React.FC = () => {
   //dont forget you can initialize useState with a called funciton 😁
   const [cells, setCells ] = useState(generateCells())
-  console.log(cells)
 
   return (
     <div className="App">
@@ -23,7 +22,7 @@ export const App: React.FC = () => {
       <div className="Body">
         {cells.map((row, rowIndex) => 
           row.map((cell, colIndex) => 
-            <Button key={`${row}`}/>
+            <Button key={`${rowIndex} ${colIndex}`}/>
           )
         )}
       </div>
