@@ -30,5 +30,14 @@ export const generateCells = (): Cell[][] => {
     }
     bombsPlaced++;
   }
+  //calculate the numbers for each cell
+  
+  for (let rowIndex = 0; rowIndex < CONSTANTS.MAX_ROWS; rowIndex++ ) {
+    for (let colIndex = 0; colIndex < CONSTANTS.MAX_COLS; colIndex++) {
+      
+    }
+  }
+
   return cells;
 };
+
