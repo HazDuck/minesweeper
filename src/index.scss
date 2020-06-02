@@ -87,4 +87,9 @@ code {
   &:active {
     @include border(#FFF, $dark_grey);
   }
+
+  &.visible {
+    border-color: #7b7b7b;
+    border-width: 1px;
+  }
 }
