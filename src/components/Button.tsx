@@ -13,9 +13,8 @@ export const Button: React.FC<ButtonProps> = ({ row, col, state, value }) => {
     if (state === CellState.visible) {
       if (value === CellValue.bomb) {
         return <span role="img" aria-label="Bomb">💣</span>
-      } else {
-         return null
       }
+      return value
     } else if (state === CellState.flagged) {
       return <span role="img" aria-label="Flag">🚩</span>
     } else {
