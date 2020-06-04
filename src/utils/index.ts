@@ -1,6 +1,5 @@
 import { CONSTANTS } from "../constants";
 import { CellValue, CellState, Cell } from "../types";
-import { number } from "prop-types";
 
 export const generateCells = (): Cell[][] => {
   //an array of different Cells, wrapped in an array
@@ -12,7 +11,7 @@ export const generateCells = (): Cell[][] => {
     for (let col = 0; col < CONSTANTS.MAX_COLS; col++) {
       cells[row].push({
         value: CellValue.none,
-        state: CellState.visible //TODO: switch back to Cellstate.initial
+        state: CellState.initial
       });
     }
   }
@@ -104,5 +103,6 @@ export const generateCells = (): Cell[][] => {
         }
       }
     }
+
   return cells;
 };

@@ -14,6 +14,9 @@ export const Button: React.FC<ButtonProps> = ({ row, col, state, value }) => {
       if (value === CellValue.bomb) {
         return <span role="img" aria-label="Bomb">💣</span>
       }
+      if (value === CellValue.none) {
+        return null
+      }
       return value
     } else if (state === CellState.flagged) {
       return <span role="img" aria-label="Flag">🚩</span>
@@ -22,7 +25,7 @@ export const Button: React.FC<ButtonProps> = ({ row, col, state, value }) => {
     }
   }
   return (
-    <div className={`Button ${state === CellState.visible ? 'visible' : ''}`}>
+    <div className={`Button ${state === CellState.visible ? 'visible' : ''} value-${value}`}>
       {renderContent()}
     </div>
   )
