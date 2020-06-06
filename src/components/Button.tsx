@@ -9,9 +9,10 @@ interface ButtonProps {
   onClick(rowParam: number, colParam: number): 
   //generic void function that takes in any amount of parameters and returns a void
   (...args: any[]) => void
+  onContext(rowParam: number, colParam: number): (...args: any[]) => void
 }
 
-export const Button: React.FC<ButtonProps> = ({ row, col, state, value, onClick}) => {
+export const Button: React.FC<ButtonProps> = ({ row, col, state, value, onClick, onContext }) => {
   const renderContent = (): React.ReactNode => {
     if (state === CellState.visible) {
       if (value === CellValue.bomb) {
@@ -30,7 +31,9 @@ export const Button: React.FC<ButtonProps> = ({ row, col, state, value, onClick}
   return (
     <div 
       className={`Button ${state === CellState.visible ? 'visible' : ''} value-${value}`}
-      onClick={onClick(row, col)}>
+      onClick={onClick(row, col)}
+      onContextMenu={onContext(row, col)}
+      >
         {renderContent()}
     </div>
   )

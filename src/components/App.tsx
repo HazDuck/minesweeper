@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { NumberDisplay } from './NumberDisplay'
 import { generateCells } from '../utils'
 import { Button } from './Button'
-import { Face, Cell } from '../types'
+import { Face, Cell, CellValue, CellState } from '../types'
 import { bool } from 'prop-types';
+import { CONSTANTS } from '../constants'
 
 export const App: React.FC = () => {
   //dont forget you can initialize useState with a called funciton 😁
@@ -11,6 +12,7 @@ export const App: React.FC = () => {
   const [face, setFace] = useState<Face>(Face.smile)
   const [time, setTime] = useState<number>(0)
   const [live, setLive] = useState<boolean>(false)
+  const [flags, setFlags] = useState<number>(CONSTANTS.NO_OF_BOMBS)
 
   useEffect(() => {
     window.addEventListener('mousedown', (): void => {
@@ -32,7 +34,7 @@ export const App: React.FC = () => {
 
   //remember: if live changes ie in the dependencies and live it true you get into this useeffect
   useEffect(() => {
-    if (live) {
+    if (live && time < 999) {
       const interval = setInterval(() => {
         setTime(time + 1)
       }, 1000)
@@ -45,7 +47,7 @@ export const App: React.FC = () => {
   return (
     <div className="App">
       <div className="Header">
-        <NumberDisplay value={0} />
+        <NumberDisplay value={flags} />
         <div 
           className="Face"
           onClick={(): void => {
@@ -72,6 +74,15 @@ export const App: React.FC = () => {
               col={colIndex}
               state={cell.state}
               value={cell.value}
+              //handles right click
+              onContext={(rowParam, colParam) => (e) => {
+                e.preventDefault()
+                if (cell.state === CellState.visible || !live) {
+                  return
+                } 
+                cell.state = CellState.flagged
+                setFlags(flags - 1)
+              }}
               //function that returns a function
               onClick={(rowParam, colParam) => (): void => {
                 //start game
