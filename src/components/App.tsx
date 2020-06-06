@@ -46,7 +46,16 @@ export const App: React.FC = () => {
     <div className="App">
       <div className="Header">
         <NumberDisplay value={0} />
-        <div className="Face">
+        <div 
+          className="Face"
+          onClick={(): void => {
+            if (live) {
+              setLive(false)
+              setTime(0)
+              setCells(generateCells())
+            }
+          }}
+          >
           <span
             role="img"
             aria-label="Smiley emoji"
