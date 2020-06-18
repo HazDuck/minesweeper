@@ -80,8 +80,14 @@ export const App: React.FC = () => {
                 if (cell.state === CellState.visible || !live) {
                   return
                 } 
-                cell.state = CellState.flagged
-                setFlags(flags - 1)
+                else if (cell.state === CellState.initial) {
+                  cell.state = CellState.flagged
+                  setFlags(flags - 1)
+                }
+                else if (cell.state === CellState.flagged) {
+                  cell.state = CellState.initial
+                  setFlags(flags + 1)
+                }
               }}
               //function that returns a function
               onClick={(rowParam, colParam) => (): void => {
