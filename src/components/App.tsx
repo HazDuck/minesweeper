@@ -44,6 +44,25 @@ export const App: React.FC = () => {
     }
   }, [live, time]) 
 
+  const handleCellClick = (rowIndex: number, colIndex: number) => (): void => {
+    //start game
+    if(!live) {
+      setLive(true)
+    }
+    const newCells = cells.slice()
+    const currentCell = cells[rowIndex][colIndex]
+
+    if (currentCell.state === CellState.flagged) {
+      return
+    }
+
+    if (currentCell.value === CellValue.bomb) {
+      //TODO: make sure first click cant be a bomb
+    } else if (currentCell.value === CellValue.none) {
+      currentCell.state = CellState.visible
+    }
+  }
+
   return (
     <div className="App">
       <div className="Header">
@@ -90,12 +109,7 @@ export const App: React.FC = () => {
                 }
               }}
               //function that returns a function
-              onClick={(rowParam, colParam) => (): void => {
-                //start game
-                if(!live) {
-                  setLive(true)
-                }
-              }}
+              onClick={() => handleCellClick(rowIndex, colIndex)}
             />
           )
         )}
