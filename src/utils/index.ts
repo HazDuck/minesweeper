@@ -1,6 +1,60 @@
 import { CONSTANTS } from "../constants";
 import { CellValue, CellState, Cell } from "../types";
 
+const grabAllAdjacentCells = (
+  cells: Cell[][], 
+  row: number, 
+  col: number
+  ): {
+    topLeftBomb: Cell | null,
+    topBomb: Cell | null,
+    topRightBomb: Cell | null,
+    leftBomb: Cell | null,
+    rightBomb: Cell | null,
+    bottomLeftBomb: Cell | null,
+    bottomBomb: Cell | null,
+    bottomRightBomb: Cell | null
+} => {
+  //TODO: rename all of these to topLeftCell etc
+  const topLeftBomb =
+  row > 0 && col > 0
+    ? cells[row - 1][col - 1]
+    : null;
+const topBomb = row > 0 ? cells[row - 1][col] : null;
+const topRightBomb =
+row > 0 && col < CONSTANTS.MAX_COLS - 1
+    ? cells[row - 1][col + 1]
+    : null;
+const leftBomb = col > 0 ? cells[row][col - 1] : null;
+const rightBomb =
+col < CONSTANTS.MAX_COLS - 1
+    ? cells[row][col + 1]
+    : null;
+const bottomLeftBomb =
+row < CONSTANTS.MAX_ROWS - 1 && col > 0
+    ? cells[row + 1][col - 1]
+    : null;
+const bottomBomb =
+row < CONSTANTS.MAX_ROWS - 1
+    ? cells[row + 1][col]
+    : null;
+const bottomRightBomb =
+row < CONSTANTS.MAX_ROWS - 1 && col < CONSTANTS.MAX_COLS - 1
+    ? cells[row + 1][col + 1]
+    : null;
+
+    return {
+      topLeftBomb,
+      topBomb,
+      topRightBomb,
+      leftBomb,
+      rightBomb,
+      bottomLeftBomb,
+      bottomBomb,
+      bottomRightBomb
+    }
+}
+
 export const generateCells = (): Cell[][] => {
   //an array of different Cells, wrapped in an array
   let cells: Cell[][] = [];
@@ -41,33 +95,17 @@ export const generateCells = (): Cell[][] => {
         }
 
         let numberOfBombs = 0;
+        const { 
+          topLeftBomb,
+          topBomb,
+          topRightBomb,
+          leftBomb,
+          rightBomb,
+          bottomLeftBomb,
+          bottomBomb,
+          bottomRightBomb
+        } = grabAllAdjacentCells(cells, rowIndex, colIndex)
         
-        const topLeftBomb =
-          rowIndex > 0 && colIndex > 0
-            ? cells[rowIndex - 1][colIndex - 1]
-            : null;
-        const topBomb = rowIndex > 0 ? cells[rowIndex - 1][colIndex] : null;
-        const topRightBomb =
-          rowIndex > 0 && colIndex < CONSTANTS.MAX_COLS - 1
-            ? cells[rowIndex - 1][colIndex + 1]
-            : null;
-        const leftBomb = colIndex > 0 ? cells[rowIndex][colIndex - 1] : null;
-        const rightBomb =
-          colIndex < CONSTANTS.MAX_COLS - 1
-            ? cells[rowIndex][colIndex + 1]
-            : null;
-        const bottomLeftBomb =
-          rowIndex < CONSTANTS.MAX_ROWS - 1 && colIndex > 0
-            ? cells[rowIndex + 1][colIndex - 1]
-            : null;
-        const bottomBomb =
-          rowIndex < CONSTANTS.MAX_ROWS - 1
-            ? cells[rowIndex + 1][colIndex]
-            : null;
-        const bottomRightBomb =
-          rowIndex < CONSTANTS.MAX_ROWS - 1 && colIndex < CONSTANTS.MAX_COLS - 1
-            ? cells[rowIndex + 1][colIndex + 1]
-            : null;
 
         //apparently can use topLeftBomb?.value but im getting an error
         if (topLeftBomb && topLeftBomb.value === CellValue.bomb) {
@@ -106,3 +144,26 @@ export const generateCells = (): Cell[][] => {
 
   return cells;
 };
+
+export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: number): Cell[][] => {
+  
+  let newCells = cells.slice()
+  const currentCell = cells[rowIndex][colIndex]
+
+  newCells[rowIndex][colIndex].state = CellState.visible
+
+  const { 
+    topLeftBomb,
+    topBomb,
+    topRightBomb,
+    leftBomb,
+    rightBomb,
+    bottomLeftBomb,
+    bottomBomb,
+    bottomRightBomb
+  } = grabAllAdjacentCells(cells, rowIndex, colIndex)
+
+  if (topLeftBomb && topLeftBomb.state === CellState.visible && topLeftBomb.value !== CellValue.bomb) {
+    
+  }
+}

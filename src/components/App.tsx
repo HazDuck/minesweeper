@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NumberDisplay } from './NumberDisplay'
-import { generateCells } from '../utils'
+import { generateCells, openMultipleCells } from '../utils'
 import { Button } from './Button'
 import { Face, Cell, CellValue, CellState } from '../types'
 import { bool } from 'prop-types';
@@ -49,17 +49,20 @@ export const App: React.FC = () => {
     if(!live) {
       setLive(true)
     }
-    const newCells = cells.slice()
+    let newCells = cells.slice()
     const currentCell = cells[rowIndex][colIndex]
 
-    if (currentCell.state === CellState.flagged) {
+    if (currentCell.state === CellState.flagged || currentCell.state === CellState.visible) {
       return
     }
 
     if (currentCell.value === CellValue.bomb) {
       //TODO: make sure first click cant be a bomb
     } else if (currentCell.value === CellValue.none) {
-      currentCell.state = CellState.visible
+      newCells = openMultipleCells(newCells, colIndex, rowIndex)
+    } else {
+      newCells[rowIndex][colIndex].state = CellState.visible
+      setCells(newCells)
     }
   }
 
