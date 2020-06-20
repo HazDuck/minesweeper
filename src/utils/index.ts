@@ -147,16 +147,7 @@ export const generateCells = (): Cell[][] => {
 
 export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: number): Cell[][] => {
   
-  
-  const currentCell = cells[rowIndex][colIndex]
-  
-  // if (currentCell.state === CellState.visible || CellState.flagged) {
-  //   console.log('cat')
-  //   return cells
-  // } 
-  
   let newCells = cells.slice()
-  console.log(rowIndex, colIndex, 'make vis')
   newCells[rowIndex][colIndex].state = CellState.visible
 
   const { 
@@ -171,7 +162,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
   } = grabAllAdjacentCells(cells, rowIndex, colIndex)
   
   if (
-    topLeftBomb && topLeftBomb.state === CellState.visible && 
+    topLeftBomb && topLeftBomb.state === CellState.initial && 
     topLeftBomb.value !== CellValue.bomb
     ) {
     if (topLeftBomb.value === CellValue.none) {
@@ -181,7 +172,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    topBomb && topBomb.state === CellState.visible && 
+    topBomb && topBomb.state === CellState.initial && 
     topBomb.value !== CellValue.bomb
     ) {
     if (topBomb.value === CellValue.none) {
@@ -191,7 +182,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    topRightBomb && topRightBomb.state === CellState.visible && 
+    topRightBomb && topRightBomb.state === CellState.initial && 
     topRightBomb.value !== CellValue.bomb
     ) {
     if (topRightBomb.value === CellValue.none) {
@@ -201,7 +192,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    leftBomb && leftBomb.state === CellState.visible && 
+    leftBomb && leftBomb.state === CellState.initial && 
     leftBomb.value !== CellValue.bomb
     ) {
     if (leftBomb.value === CellValue.none) {
@@ -211,7 +202,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    rightBomb && rightBomb.state === CellState.visible && 
+    rightBomb && rightBomb.state === CellState.initial && 
     rightBomb.value !== CellValue.bomb
     ) {
     if (rightBomb.value === CellValue.none) {
@@ -221,7 +212,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    bottomLeftBomb && bottomLeftBomb.state === CellState.visible && 
+    bottomLeftBomb && bottomLeftBomb.state === CellState.initial && 
     bottomLeftBomb.value !== CellValue.bomb
     ) {
     if (bottomLeftBomb.value === CellValue.none) {
@@ -231,7 +222,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    bottomBomb && bottomBomb.state === CellState.visible && 
+    bottomBomb && bottomBomb.state === CellState.initial && 
     bottomBomb.value !== CellValue.bomb
     ) {
     if (bottomBomb.value === CellValue.none) {
@@ -241,7 +232,7 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     }
   }
   if (
-    bottomRightBomb && bottomRightBomb.state === CellState.visible && 
+    bottomRightBomb && bottomRightBomb.state === CellState.initial && 
     bottomRightBomb.value !== CellValue.bomb
     ) {
     if (bottomRightBomb.value === CellValue.none) {
