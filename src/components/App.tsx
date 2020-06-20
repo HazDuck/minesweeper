@@ -59,7 +59,8 @@ export const App: React.FC = () => {
     if (currentCell.value === CellValue.bomb) {
       //TODO: make sure first click cant be a bomb
     } else if (currentCell.value === CellValue.none) {
-      newCells = openMultipleCells(newCells, colIndex, rowIndex)
+      newCells = openMultipleCells(newCells, rowIndex, colIndex)
+      setCells(newCells)
     } else {
       newCells[rowIndex][colIndex].state = CellState.visible
       setCells(newCells)

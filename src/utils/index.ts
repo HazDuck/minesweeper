@@ -147,9 +147,16 @@ export const generateCells = (): Cell[][] => {
 
 export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: number): Cell[][] => {
   
-  let newCells = cells.slice()
+  
   const currentCell = cells[rowIndex][colIndex]
-
+  
+  // if (currentCell.state === CellState.visible || CellState.flagged) {
+  //   console.log('cat')
+  //   return cells
+  // } 
+  
+  let newCells = cells.slice()
+  console.log(rowIndex, colIndex, 'make vis')
   newCells[rowIndex][colIndex].state = CellState.visible
 
   const { 
@@ -162,8 +169,87 @@ export const openMultipleCells = (cells: Cell[][], rowIndex: number, colIndex: n
     bottomBomb,
     bottomRightBomb
   } = grabAllAdjacentCells(cells, rowIndex, colIndex)
-
-  if (topLeftBomb && topLeftBomb.state === CellState.visible && topLeftBomb.value !== CellValue.bomb) {
-    
+  
+  if (
+    topLeftBomb && topLeftBomb.state === CellState.visible && 
+    topLeftBomb.value !== CellValue.bomb
+    ) {
+    if (topLeftBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex - 1, colIndex - 1)
+    } else {
+      newCells[rowIndex - 1][colIndex - 1].state = CellState.visible
+    }
   }
+  if (
+    topBomb && topBomb.state === CellState.visible && 
+    topBomb.value !== CellValue.bomb
+    ) {
+    if (topBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex - 1, colIndex)
+    } else {
+      newCells[rowIndex - 1][colIndex].state = CellState.visible
+    }
+  }
+  if (
+    topRightBomb && topRightBomb.state === CellState.visible && 
+    topRightBomb.value !== CellValue.bomb
+    ) {
+    if (topRightBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex - 1, colIndex + 1)
+    } else {
+      newCells[rowIndex - 1][colIndex + 1].state = CellState.visible
+    }
+  }
+  if (
+    leftBomb && leftBomb.state === CellState.visible && 
+    leftBomb.value !== CellValue.bomb
+    ) {
+    if (leftBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex, colIndex - 1)
+    } else {
+      newCells[rowIndex][colIndex - 1].state = CellState.visible
+    }
+  }
+  if (
+    rightBomb && rightBomb.state === CellState.visible && 
+    rightBomb.value !== CellValue.bomb
+    ) {
+    if (rightBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex, colIndex + 1)
+    } else {
+      newCells[rowIndex][colIndex + 1].state = CellState.visible
+    }
+  }
+  if (
+    bottomLeftBomb && bottomLeftBomb.state === CellState.visible && 
+    bottomLeftBomb.value !== CellValue.bomb
+    ) {
+    if (bottomLeftBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex + 1, colIndex - 1)
+    } else {
+      newCells[rowIndex + 1][colIndex - 1].state = CellState.visible
+    }
+  }
+  if (
+    bottomBomb && bottomBomb.state === CellState.visible && 
+    bottomBomb.value !== CellValue.bomb
+    ) {
+    if (bottomBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex + 1, colIndex)
+    } else {
+      newCells[rowIndex + 1][colIndex].state = CellState.visible
+    }
+  }
+  if (
+    bottomRightBomb && bottomRightBomb.state === CellState.visible && 
+    bottomRightBomb.value !== CellValue.bomb
+    ) {
+    if (bottomRightBomb.value === CellValue.none) {
+      newCells = openMultipleCells(newCells, rowIndex + 1, colIndex + 1)
+    } else {
+      newCells[rowIndex + 1][colIndex + 1].state = CellState.visible
+    }
+  }
+  
+  return newCells
 }
