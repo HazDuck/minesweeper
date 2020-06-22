@@ -3,7 +3,6 @@ import { NumberDisplay } from './NumberDisplay'
 import { generateCells, openMultipleCells } from '../utils'
 import { Button } from './Button'
 import { Face, Cell, CellValue, CellState } from '../types'
-import { bool } from 'prop-types';
 import { CONSTANTS } from '../constants'
 
 export const App: React.FC = () => {
@@ -13,6 +12,7 @@ export const App: React.FC = () => {
   const [time, setTime] = useState<number>(0)
   const [live, setLive] = useState<boolean>(false)
   const [flags, setFlags] = useState<number>(CONSTANTS.NO_OF_BOMBS)
+  const [hasLost, setHasLost] = useState<boolean>(false)
 
   useEffect(() => {
     window.addEventListener('mousedown', (): void => {
@@ -44,9 +44,19 @@ export const App: React.FC = () => {
     }
   }, [live, time]) 
 
+  useEffect(() => {
+    if (hasLost) {
+      setLive(false)
+      setFace(Face.lost)
+    }
+    return () => {
+    }
+  }, [hasLost])
+
   const handleCellClick = (rowIndex: number, colIndex: number) => (): void => {
     //start game
     if(!live) {
+      //TODO: make sure first click cant be a bomb
       setLive(true)
     }
     let newCells = cells.slice()
@@ -57,7 +67,9 @@ export const App: React.FC = () => {
     }
 
     if (currentCell.value === CellValue.bomb) {
-      //TODO: make sure first click cant be a bomb
+      setHasLost(true)
+      showAllBombs()
+      
     } else if (currentCell.value === CellValue.none) {
       newCells = openMultipleCells(newCells, rowIndex, colIndex)
       setCells(newCells)
@@ -65,6 +77,19 @@ export const App: React.FC = () => {
       newCells[rowIndex][colIndex].state = CellState.visible
       setCells(newCells)
     }
+  }
+
+  const showAllBombs = (): Cell[][] => {
+    const currentCells = cells.slice()
+    return currentCells.map(row => 
+      row.map(cell => {
+        if (cell.value === CellValue.bomb) {
+          cell.state = CellState.visible
+          return cell
+        }
+        return cell
+      })
+    )
   }
 
   return (
@@ -78,6 +103,7 @@ export const App: React.FC = () => {
               setLive(false)
               setTime(0)
               setCells(generateCells())
+              setHasLost(false)
             }
           }}
           >
