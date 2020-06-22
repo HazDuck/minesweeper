@@ -19,7 +19,8 @@ export enum CellState {
 
 export type Cell =  {
   value: CellValue, 
-  state: CellState 
+  state: CellState, 
+  red?: boolean
 }
 
 export enum Face {

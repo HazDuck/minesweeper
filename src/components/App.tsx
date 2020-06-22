@@ -4,6 +4,7 @@ import { generateCells, openMultipleCells } from '../utils'
 import { Button } from './Button'
 import { Face, Cell, CellValue, CellState } from '../types'
 import { CONSTANTS } from '../constants'
+import { red } from 'color-name';
 
 export const App: React.FC = () => {
   //dont forget you can initialize useState with a called funciton 😁
@@ -59,6 +60,7 @@ export const App: React.FC = () => {
       //TODO: make sure first click cant be a bomb
       setLive(true)
     }
+
     let newCells = cells.slice()
     const currentCell = cells[rowIndex][colIndex]
 
@@ -66,10 +68,12 @@ export const App: React.FC = () => {
       return
     }
 
+    //handle different behaviours based on cell value
     if (currentCell.value === CellValue.bomb) {
+      currentCell.red = true
       setHasLost(true)
-      showAllBombs()
-      
+      newCells = showAllBombs()
+      setCells(newCells)
     } else if (currentCell.value === CellValue.none) {
       newCells = openMultipleCells(newCells, rowIndex, colIndex)
       setCells(newCells)
@@ -123,6 +127,7 @@ export const App: React.FC = () => {
               col={colIndex}
               state={cell.state}
               value={cell.value}
+              red={cell.red}
               //handles right click
               onContext={(rowParam, colParam) => (e) => {
                 e.preventDefault()
