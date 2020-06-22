@@ -70,7 +70,7 @@ export const App: React.FC = () => {
 
     //handle different behaviours based on cell value
     if (currentCell.value === CellValue.bomb) {
-      currentCell.red = true
+      newCells[rowIndex][colIndex].red = true
       setHasLost(true)
       newCells = showAllBombs()
       setCells(newCells)
@@ -103,12 +103,10 @@ export const App: React.FC = () => {
         <div 
           className="Face"
           onClick={(): void => {
-            if (live) {
-              setLive(false)
-              setTime(0)
-              setCells(generateCells())
-              setHasLost(false)
-            }
+            setLive(false)
+            setTime(0)
+            setCells(generateCells())
+            setHasLost(false)
           }}
           >
           <span
