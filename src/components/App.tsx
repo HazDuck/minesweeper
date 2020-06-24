@@ -5,6 +5,7 @@ import { Button } from './Button'
 import { Face, Cell, CellValue, CellState } from '../types'
 import { CONSTANTS } from '../constants'
 import { red } from 'color-name';
+import { bool } from 'prop-types';
 
 export const App: React.FC = () => {
   //dont forget you can initialize useState with a called funciton 😁
@@ -14,6 +15,7 @@ export const App: React.FC = () => {
   const [live, setLive] = useState<boolean>(false)
   const [flags, setFlags] = useState<number>(CONSTANTS.NO_OF_BOMBS)
   const [hasLost, setHasLost] = useState<boolean>(false)
+  const [hasWon, setHasWon] = useState<boolean>(false)
 
   useEffect(() => {
     window.addEventListener('mousedown', (): void => {
@@ -50,9 +52,14 @@ export const App: React.FC = () => {
       setLive(false)
       setFace(Face.lost)
     }
-    return () => {
-    }
   }, [hasLost])
+
+  useEffect(() => {
+    if (hasWon) {
+      setFace(Face.win)
+      setLive(false)
+    }
+  })
 
   const handleCellClick = (rowIndex: number, colIndex: number) => (): void => {
     //start game
@@ -74,13 +81,36 @@ export const App: React.FC = () => {
       setHasLost(true)
       newCells = showAllBombs()
       setCells(newCells)
+      return 
     } else if (currentCell.value === CellValue.none) {
       newCells = openMultipleCells(newCells, rowIndex, colIndex)
       setCells(newCells)
     } else {
       newCells[rowIndex][colIndex].state = CellState.visible
-      setCells(newCells)
     }
+
+    //check to see if we have a winenr 
+    let safeOpenCellsExist = false
+    for (let row = 0; row < CONSTANTS.MAX_ROWS; row++) {
+      for (let col = 0; col < CONSTANTS.MAX_COLS; col++) {
+        if (newCells[row][col].state === CellState.initial && newCells[row][col].value != CellValue.bomb) {
+          safeOpenCellsExist = true
+          break
+        }
+      }
+    }
+
+    if (!safeOpenCellsExist) {
+      newCells = newCells.map(row => 
+        row.map(cell => {
+        if (cell.value === CellValue.bomb) {
+          cell.state = CellState.flagged
+        }
+        return cell
+      }))
+    }
+
+    setCells(newCells)
   }
 
   const showAllBombs = (): Cell[][] => {
@@ -94,6 +124,7 @@ export const App: React.FC = () => {
         return cell
       })
     )
+    setHasWon(true)
   }
 
   return (
@@ -107,6 +138,7 @@ export const App: React.FC = () => {
             setTime(0)
             setCells(generateCells())
             setHasLost(false)
+            setHasWon(false)
           }}
           >
           <span
