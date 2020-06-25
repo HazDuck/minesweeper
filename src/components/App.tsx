@@ -17,6 +17,8 @@ export const App: React.FC = () => {
   const [hasLost, setHasLost] = useState<boolean>(false)
   const [hasWon, setHasWon] = useState<boolean>(false)
 
+  console.log(hasWon)
+  
   useEffect(() => {
     window.addEventListener('mousedown', (): void => {
       setFace(Face.oh)
@@ -24,7 +26,7 @@ export const App: React.FC = () => {
     window.addEventListener('mouseup', (): void => {
       setFace(Face.smile)
     })
-
+    
     return () => {
       window.removeEventListener('mousedown', (): void => {
         setFace(Face.oh)
@@ -33,7 +35,7 @@ export const App: React.FC = () => {
         setFace(Face.smile)
       })
     }
-  }, [])
+  })
 
   //remember: if live changes ie in the dependencies and live it true you get into this useeffect
   useEffect(() => {
@@ -63,8 +65,9 @@ export const App: React.FC = () => {
 
   const handleCellClick = (rowIndex: number, colIndex: number) => (): void => {
     //start game
-    if(!live) {
+    if(!live && !hasWon) {
       //TODO: make sure first click cant be a bomb
+      console.log('here')
       setLive(true)
     }
 
