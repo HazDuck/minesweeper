@@ -139,6 +139,7 @@ export const App: React.FC = () => {
             setCells(generateCells())
             setHasLost(false)
             setHasWon(false)
+            setFlags(10)
           }}
           >
           <span
