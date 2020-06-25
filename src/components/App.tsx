@@ -59,7 +59,7 @@ export const App: React.FC = () => {
       setFace(Face.win)
       setLive(false)
     }
-  })
+  }, [hasWon])
 
   const handleCellClick = (rowIndex: number, colIndex: number) => (): void => {
     //start game
@@ -93,7 +93,7 @@ export const App: React.FC = () => {
     let safeOpenCellsExist = false
     for (let row = 0; row < CONSTANTS.MAX_ROWS; row++) {
       for (let col = 0; col < CONSTANTS.MAX_COLS; col++) {
-        if (newCells[row][col].state === CellState.initial && newCells[row][col].value != CellValue.bomb) {
+        if (newCells[row][col].state === CellState.initial && newCells[row][col].value !== CellValue.bomb) {
           safeOpenCellsExist = true
           break
         }
@@ -108,6 +108,7 @@ export const App: React.FC = () => {
         }
         return cell
       }))
+      setHasWon(true)
     }
 
     setCells(newCells)
@@ -124,7 +125,6 @@ export const App: React.FC = () => {
         return cell
       })
     )
-    setHasWon(true)
   }
 
   return (
