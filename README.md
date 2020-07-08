@@ -1,3 +1,5 @@
+![Alt text](https://ibb.co/BCSjz9M "Minesweeper clone")
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
